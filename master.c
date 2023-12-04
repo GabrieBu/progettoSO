@@ -8,12 +8,13 @@ void err_exit(char* s){
 }
 
 void init_processi(pid_t parent_pid, pid_t child_pid){
-    
+    char *envp = {NULL};
+    char *argvNull = {NULL};
      switch(fork()){ //creazione attivatore
         case -1:
             err_exit("Fork attivatore");
         case 0:
-            execve("./attivatore", NULL, NULL);
+            execve("./attivatore", argvNull, envp);
             err_exit("Exceve attivatore");
         default: 
             wait(NULL);
@@ -23,7 +24,7 @@ void init_processi(pid_t parent_pid, pid_t child_pid){
         case -1:
             err_exit("Fork attivatore");
         case 0:
-            execve("./alimentazione", NULL, NULL);
+            execve("./alimentazione", argvNull, envp);
             err_exit("Exceve alimentazione");
          default: 
             wait(NULL);
@@ -33,7 +34,7 @@ void init_processi(pid_t parent_pid, pid_t child_pid){
         case -1:
             err_exit("Fork attivatore");
         case 0:
-            execve("./inibitore", NULL, NULL);
+            execve("./inibitore", argvNull, envp);
             err_exit("Exceve inibitore");
         default: 
             wait(NULL);
@@ -51,7 +52,7 @@ void init_processi(pid_t parent_pid, pid_t child_pid){
             case 0:  
                 sprintf(NUM_ATOMICO, "%d", rand() % 30);
                 argvAtomo[0] = NUM_ATOMICO;
-                execve("./atomo", argvAtomo, NULL); //argv = NUM_ATOMICO, envp = NULL
+                execve("./atomo", argvAtomo, envp); //argv = NUM_ATOMICO, envp = NULL
                 err_exit("Exceve atomo");
             default: 
                 wait(NULL);
