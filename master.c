@@ -1,15 +1,15 @@
-#ifndef DEFINIZIONI_H
 #include "definizioni.h"
-#endif
-
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
 void err_exit(char* s){
     printf("\nCausa errore: %s", s);
     exit(EXIT_FAILURE);
 }
 
 void init_processi(pid_t parent_pid, pid_t child_pid){
-    char *envp = {NULL};
-    char *argvNull = {NULL};
+    char *envp[] = {NULL};
+    char *argvNull[] = {NULL};
      switch(fork()){ //creazione attivatore
         case -1:
             err_exit("Fork attivatore");
