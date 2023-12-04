@@ -38,12 +38,12 @@ void init_processi(pid_t parent_pid, pid_t child_pid){
         default: 
             wait(NULL);
     }
-    srand((unsigned int)getpid()); // setto il seed
     char **argvAtomo = (char **)malloc(sizeof(char*) * 1); 
     char* NUM_ATOMICO = (char*)malloc(sizeof(char) * 7);
     for(int i = 0; i < N_ATOMI_INIT; i++){ //creazione N_ATOMI_INIT processi atomo
         if(getpid() == parent_pid){
             child_pid = fork();
+            srand((unsigned int) i); // setto il seed
         }
         switch(child_pid){
             case -1:

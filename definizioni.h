@@ -9,7 +9,7 @@
 #define SIM_DURATION 10
 //----------------------
 // INIZIALIZZAZIONE
-#define N_ATOMI_INIT 2
+#define N_ATOMI_INIT 10
 //----------------------
 //GENERALI
 #define ENERGY_DEMAND 15
