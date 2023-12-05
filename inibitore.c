@@ -8,13 +8,12 @@ extern void err_exit(char *);
 
 int main(int argc, char **argv){
     int semid = atoi(argv[0]);
-    printf("Sono inibitore e semid: %d\n", semid);
 
     if(releaseSem(semid, 0, 1, 2) == -1)
-        err_exit("releaseSem");
-     printf("[inibitore] ho inizializzato, aspetto...");
+        err_exit("releaseSem\n");
+     printf("[inibitore %d] ho inizializzato, aspetto...\n", getpid());
      if(reserveSem(semid, 1, 1, 2) == -1)
         err_exit("reserveSem simulazione");
-     printf("[inibitore] inizio anche io simulazione");
+     printf("[inibitore] inizio anche io simulazione\n");
     exit(EXIT_SUCCESS);
 }

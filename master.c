@@ -79,29 +79,30 @@ int main(){
     printf("[master %d]\n", master_pid);
 
     if((semid = semget(key, 2, IPC_CREAT | 0666 )) == -1)
-        err_exit("Semget");
+        err_exit("Semget\n");
 
     if(semctl(semid, 0, SETVAL, arg_inizializzazione) == -1) //inizializzo semaforo inizializzazzione a 0
-        err_exit("semctl con SETVAL");
+        err_exit("semctl con SETVAL\n");
     
     if(semctl(semid, 1, SETVAL, arg_simulazione) == -1) //inizializzo semaforo inizializzazzione a 0
-        err_exit("semctl con SETVAL");
+        err_exit("semctl con SETVAL\n");
 
     init_processi(master_pid, child_pid, semid); //inizializza tutti i processi
 
     int semaph_operation = N_ATOMI_INIT + 3;
     if(reserveSem(semid, 0, semaph_operation, 2) == -1)
-        err_exit("reserveSem");
+        err_exit("reserveSem\n");
 
     printf("\n[master %d] fine inizializzazione, inizia la simulazione\n", getpid());
     //inizio simulzione
     if(releaseSem(semid, 1, semaph_operation, 2) == -1)
-        err_exit("releaseSem simulazione");
+        err_exit("releaseSem simulazione\n");
     
-
+    /*sleep(5);
     if(semctl(semid, 0, IPC_RMID, NULL) == -1)
-        err_exit("remove semid_inizializzazione IPC_RMID");
+        err_exit("remove semid_inizializzazione IPC_RMID\n");
      if(semctl(semid, 1, IPC_RMID, NULL) == -1)
-        err_exit("remove semid_simulazione IPC_RMID");
+        err_exit("remove semid_simulazione IPC_RMID\n");*/
+    sleep(50);
     exit(EXIT_SUCCESS);
 }

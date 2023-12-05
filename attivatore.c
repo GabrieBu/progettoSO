@@ -7,14 +7,13 @@ extern int reserveSem(int, int, int, int);
 extern void err_exit(char *);
 
 int main(int agrc, char **argv){
-    printf("Sono attivatore e semid: %s\n", argv[0]);
     int semid = atoi(argv[0]);
 
     if(releaseSem(semid, 0, 1, 2) == -1)
-        err_exit("releaseSem");
-    printf("[attivatore] ho inizializzato, aspetto...");
+        err_exit("releaseSem\n");
+    printf("[attivatore %d] ho inizializzato, aspetto...\n", getpid());
     if(reserveSem(semid, 1, 1, 2) == -1)
-        err_exit("reserveSem simulazione");
-    printf("[attivatore] inizio anche io simulazione");
+        err_exit("reserveSem simulazione\n");
+    printf("[attivatore] inizio anche io simulazione\n");
     exit(EXIT_SUCCESS);
 }
