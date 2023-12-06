@@ -1,19 +1,19 @@
 # progettoSO
 
-Atomo:
+**Atomo:**
 
 argv[0] = NUM_ATOMICO
 
 argv[1] = semid (opzionale)
 
-Inibitore:
+**Inibitore:**
 
 argv[0] = NUM_ATOMICO
 
-Attivatore:
+**Attivatore:**
 
 argv[0] = semid
 
-Alimentazione:
+**Alimentazione:**
 
 argv[0] = semid
