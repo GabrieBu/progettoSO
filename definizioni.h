@@ -9,7 +9,7 @@
 #define SIM_DURATION 10
 //----------------------
 // INIZIALIZZAZIONE
-#define N_ATOMI_INIT 5
+#define N_ATOMI_INIT 4
 #define N_ATOM_MAX 30
 //----------------------
 //GENERALI

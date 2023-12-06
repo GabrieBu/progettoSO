@@ -8,10 +8,12 @@ extern void err_exit(char *);
 
 int main(int argc, char **argv){
     int NUM_ATOMICO = atoi(argv[0]);
+    int num_atomico_figlio_1 = NUM_ATOMICO * 0.5;
+    int num_atomico_figlio_2 =  NUM_ATOMICO - num_atomico_figlio_2;
     char *num_a1_char = (char*)malloc(sizeof(char) * 20); //non so bene perchè 20, mi gustava
-    sprintf(num_a1_char, "%f", NUM_ATOMICO * 0.5);
+    sprintf(num_a1_char, "%d", num_atomico_figlio_1);
     char *num_a2_char = (char*)malloc(sizeof(char) * 20); //non so bene perchè 20, mi gustava
-    sprintf(num_a2_char, "%f", NUM_ATOMICO - (NUM_ATOMICO * 0.5));
+    sprintf(num_a2_char, "%d", num_atomico_figlio_2);
     char *argv_figlio_1[2] = {num_a1_char, NULL};
     char *argv_figlio_2[2] = {num_a2_char, NULL};
     char *envp[1] = {NULL};
