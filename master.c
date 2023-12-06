@@ -1,14 +1,23 @@
-#include "definizioni.h"
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <sys/sem.h>
 #include "libscissione.h"
+#include "definizioni.h"
 
 extern int releaseSem(int, int, int, int);
 extern int reserveSem(int, int, int, int);
 extern void err_exit(char *);
 
+union semun{
+    int val;
+    struct semid_ds *buf;
+    unsigned short *array;
+    #if defined(__linux__)
+    struct seminfo *__buf;
+    #endif
+};
 void init_processi(pid_t parent_pid, pid_t child_pid, int semid){
     char *semidChar;
     sprintf(semidChar, "%d", semid);
@@ -43,7 +52,7 @@ void init_processi(pid_t parent_pid, pid_t child_pid, int semid){
     sprintf(argv_semid, "%d", semid);
     char *NUM_ATOMICO = (char*)malloc(sizeof(char) * 7);
     for(int i = 0; i < N_ATOMI_INIT; i++){ //creazione N_ATOMI_INIT processi atomo
-         srand((unsigned int) i); // setto il seed
+        srand((unsigned int) i + 1); // setto il seed
         if(getpid() == parent_pid)
             child_pid = fork();
         
@@ -51,7 +60,7 @@ void init_processi(pid_t parent_pid, pid_t child_pid, int semid){
             case -1:
                 err_exit("Fork atomo");
             case 0:  
-                sprintf(NUM_ATOMICO, "%d", (rand() % N_ATOM_MAX) + 1); //random tra 1 e N_ATOM_MAX
+                sprintf(NUM_ATOMICO, "%d", (rand() % N_ATOM_MAX)+1); //random tra 1 e N_ATOM_MAX
                 argvAtomo[0] = NUM_ATOMICO;
                 argvAtomo[1] = argv_semid;
                 execve("./atomo", argvAtomo, envp); //argv = NUM_ATOMICO, envp = NULL

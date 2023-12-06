@@ -9,13 +9,21 @@ extern void err_exit(char *);
 int main(int argc, char **argv){
     int NUM_ATOMICO = atoi(argv[0]);
     int num_atomico_figlio_1 = NUM_ATOMICO * 0.5;
-    int num_atomico_figlio_2 =  NUM_ATOMICO - num_atomico_figlio_2;
+    int num_atomico_figlio_2 =  NUM_ATOMICO - num_atomico_figlio_1;
+
     char *num_a1_char = (char*)malloc(sizeof(char) * 20); //non so bene perchè 20, mi gustava
     sprintf(num_a1_char, "%d", num_atomico_figlio_1);
     char *num_a2_char = (char*)malloc(sizeof(char) * 20); //non so bene perchè 20, mi gustava
     sprintf(num_a2_char, "%d", num_atomico_figlio_2);
-    char *argv_figlio_1[2] = {num_a1_char, NULL};
-    char *argv_figlio_2[2] = {num_a2_char, NULL};
+
+    char **argv_figlio_1 = (char**)malloc(sizeof(char*) * 2);
+    char **argv_figlio_2 = (char**)malloc(sizeof(char*) * 2);
+    argv_figlio_1[0] = num_a1_char;
+    argv_figlio_1[1] = NULL;
+    argv_figlio_2[0] = num_a2_char;
+    argv_figlio_2[1] = NULL;
+    //char *argv_figlio_1[2] = {num_a1_char, NULL};
+    //char *argv_figlio_2[2] = {num_a2_char, NULL};
     char *envp[1] = {NULL};
 
     printf("[pid(%d), NUM_ATOMICO: %d]\n", getpid(), NUM_ATOMICO);

@@ -9,11 +9,12 @@
 #define SIM_DURATION 10
 //----------------------
 // INIZIALIZZAZIONE
-#define N_ATOMI_INIT 4
+#define N_ATOMI_INIT 10
 #define N_ATOM_MAX 30
 //----------------------
 //GENERALI
 #define ENERGY_DEMAND 15
-#define STEP_NANO 0.000005 //500 nanosecondi
+#define STEP_NANO 0.000000999 //999 nanosecondi -> 0.000000999 secondi
 #define MIN_N_ATOMICO 10
+
 //----------------------
