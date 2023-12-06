@@ -39,8 +39,8 @@ void init_processi(pid_t parent_pid, pid_t child_pid, int semid){
             err_exit("Exceve inibitore");
     }
     char **argvAtomo = (char **)malloc(sizeof(char*) * 2); 
-    char *argv_key = (char*)malloc(sizeof(char) * 20);
-    sprintf(argv_key, "%d", semid);
+    char *argv_semid = (char*)malloc(sizeof(char) * 20);
+    sprintf(argv_semid, "%d", semid);
     char *NUM_ATOMICO = (char*)malloc(sizeof(char) * 7);
     for(int i = 0; i < N_ATOMI_INIT; i++){ //creazione N_ATOMI_INIT processi atomo
          srand((unsigned int) i); // setto il seed
@@ -52,15 +52,15 @@ void init_processi(pid_t parent_pid, pid_t child_pid, int semid){
                 err_exit("Fork atomo");
             case 0:  
                 sprintf(NUM_ATOMICO, "%d", (rand() % N_ATOM_MAX) + 1); //random tra 1 e N_ATOM_MAX
-                argvAtomo[0] = argv_key;
-                argvAtomo[1] = NUM_ATOMICO;
+                argvAtomo[0] = NUM_ATOMICO;
+                argvAtomo[1] = argv_semid;
                 execve("./atomo", argvAtomo, envp); //argv = NUM_ATOMICO, envp = NULL
                 err_exit("Exceve atomo");
         }
     }
     free(argvAtomo);
     free(NUM_ATOMICO);
-    free(argv_key);
+    free(argv_semid);
 }
 
 void print_stats(){
@@ -70,7 +70,7 @@ void print_stats(){
 int main(){
     pid_t master_pid = getpid(), child_pid;
     int semid; //semid semafoto master
-    int key = ftok("master.c", 'A');
+    //int key = ftok("master.c", 'A');
     union semun arg_inizializzazione;
     arg_inizializzazione.val = 0; //inizializzo semaforo inizializzazione a 0
     union semun arg_simulazione;
@@ -78,7 +78,7 @@ int main(){
     
     printf("[master %d]\n", master_pid);
 
-    if((semid = semget(key, 2, IPC_CREAT | 0666 )) == -1)
+    if((semid = semget(IPC_PRIVATE, 2, IPC_CREAT | 0666 )) == -1)
         err_exit("Semget\n");
 
     if(semctl(semid, 0, SETVAL, arg_inizializzazione) == -1) //inizializzo semaforo inizializzazzione a 0
@@ -98,11 +98,10 @@ int main(){
     if(releaseSem(semid, 1, semaph_operation, 2) == -1)
         err_exit("releaseSem simulazione\n");
     
-    /*sleep(5);
-    if(semctl(semid, 0, IPC_RMID, NULL) == -1)
+    //questo sleep è solo per dare il tempo a tutti di fare
+    //e non togliergli quindi il semaforo da sotto il culo
+    sleep(15);
+    if(semctl(semid, 0, IPC_RMID, NULL) == -1) //elimino il semafoto
         err_exit("remove semid_inizializzazione IPC_RMID\n");
-     if(semctl(semid, 1, IPC_RMID, NULL) == -1)
-        err_exit("remove semid_simulazione IPC_RMID\n");*/
-    sleep(50);
     exit(EXIT_SUCCESS);
 }
