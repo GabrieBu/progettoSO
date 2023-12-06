@@ -2,6 +2,7 @@
 
 Atomo:
 argv[0] = NUM_ATOMICO
+
 argv[1] = semid (opzionale)
 
 Inibitore:
