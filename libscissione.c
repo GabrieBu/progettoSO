@@ -30,3 +30,4 @@ void err_exit(char* s){
     printf("\nCausa errore: %s", s);
     exit(EXIT_FAILURE);
 }
+
